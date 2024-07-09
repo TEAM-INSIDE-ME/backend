@@ -5,8 +5,8 @@ spring:
         registration:
           # 구글 로그인 추가
           google:
-            client-id: ${{secrets.GOOGLE_ID}}
-            client-secret: ${{ secrets.GOOGLE_CODE }}
+            client-id: ${secrets.GOOGLE_ID}
+            client-secret: ${secrets.GOOGLE_CODE}
             scope:
               - email
               - profile
