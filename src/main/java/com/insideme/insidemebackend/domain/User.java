@@ -1,4 +1,4 @@
-package com.insideme.insidemebackend.entity;
+package com.insideme.insidemebackend.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;
@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @ToString
@@ -17,11 +18,5 @@ public class User {
     private String provider;
     private String name;
     private String email;
-    private String profileImage;
-    private String phoneNumber;
-    private String accessToken;
-    private String refreshToken;
-    private Date createdAt;
-    private Date updatedAt;
-
+    private List<String> diaryTBC;
 }

@@ -1,6 +1,6 @@
 package com.insideme.insidemebackend.dto;
 
-import com.insideme.insidemebackend.entity.User;
+import com.insideme.insidemebackend.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
@@ -16,8 +16,4 @@ public class UserForm {
     private String accessToken;
     private String refreshToken;
 
-    public User toEntity(){
-        return new User(null, userId, provider, name, email, profileImage,
-                phoneNumber, accessToken, refreshToken, null, null);
-    }
 }
