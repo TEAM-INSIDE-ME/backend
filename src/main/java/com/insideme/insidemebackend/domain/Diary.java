@@ -1,11 +1,10 @@
 package com.insideme.insidemebackend.domain;
 
 import lombok.AllArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
