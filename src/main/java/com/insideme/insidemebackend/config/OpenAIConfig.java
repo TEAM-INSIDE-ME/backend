@@ -3,9 +3,11 @@ package com.insideme.insidemebackend.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
+@PropertySource("classpath:OpenAI.properties")
 public class OpenAIConfig {
     @Value("${openai.api.key}")
     private String ApiKey;
