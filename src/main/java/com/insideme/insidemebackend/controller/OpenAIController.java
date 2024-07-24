@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/api/openai")
-
 public class OpenAIController {
     @Autowired
     private RestTemplate restTemplate;
