@@ -42,3 +42,4 @@ out/
 
 /src/main/resources/application-oauth.yml
 src/main/resources/OpenAI.properties
+src/main/resources/MongoDB.properties

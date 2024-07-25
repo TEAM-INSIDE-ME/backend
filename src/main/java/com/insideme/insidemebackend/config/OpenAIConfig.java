@@ -12,14 +12,14 @@ public class OpenAIConfig {
     @Value("${openai.api.key}")
     private String apiKey;
     @Bean
-    public RestTemplate restTemplate(){
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getInterceptors().add((request, body, execution) -> {
+    public RestTemplate openAIrestTemplate(){
+        RestTemplate openAIrestTemplate = new RestTemplate();
+        openAIrestTemplate.getInterceptors().add((request, body, execution) -> {
             request.getHeaders().add("Content-Type", "application/json");
             request.getHeaders().add("Authorization", "Bearer " + apiKey);
             request.getHeaders().add("OpenAI-Beta", "assistants=v2");
             return execution.execute(request, body);
         });
-        return restTemplate;
+        return openAIrestTemplate;
     }
 }
