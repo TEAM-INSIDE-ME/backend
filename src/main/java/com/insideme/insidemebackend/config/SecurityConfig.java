@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/public/**", "/api/openai/**").permitAll()
+                                .requestMatchers("/public/**", "/api/openai/**", "/api/diary/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
