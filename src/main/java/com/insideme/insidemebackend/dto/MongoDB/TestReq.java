@@ -7,6 +7,6 @@ public record TestReq(
         String dataSource,
         String database,
         String collection,
-        Document document
+        Object document
 ) {
 }

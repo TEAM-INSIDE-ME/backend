@@ -7,7 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@PropertySource("classpath:OpenAI.properties")
 public class OpenAIConfig {
     @Value("${openai.api.key}")
     private String apiKey;

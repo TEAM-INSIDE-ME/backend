@@ -26,4 +26,18 @@ public class MongoDBController {
         TestRes testRes = restTemplate.postForObject(url, request, TestRes.class);
         return ResponseEntity.ok(testRes);
     }
+
+    @PostMapping("/findOne")
+    public ResponseEntity<TestRes> findOneDocument(@RequestBody TestReq request) {
+        String url = "https://data.mongodb-api.com/app/"+appId+"/endpoint/data/v1/action/findOne";
+        TestRes testRes = restTemplate.postForObject(url, request, TestRes.class);
+        return ResponseEntity.ok(testRes);
+    }
+
+    @PostMapping("/deleteMany")
+    public ResponseEntity<TestRes> deleteManyDocuments(@RequestBody TestReq request) {
+        String url = "https://data.mongodb-api.com/app/"+appId+"/endpoint/data/v1/action/deleteMany";
+        TestRes testRes = restTemplate.postForObject(url, request, TestRes.class);
+        return ResponseEntity.ok(testRes);
+    }
 }
