@@ -1,4 +1,4 @@
-package com.insideme.insidemebackend.dto;
+package com.insideme.insidemebackend.dto.diary;
 
 import lombok.AllArgsConstructor;
 
