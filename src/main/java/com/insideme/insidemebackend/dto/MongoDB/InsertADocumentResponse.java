@@ -1,6 +1,6 @@
 package com.insideme.insidemebackend.dto.MongoDB;
 
-public record TestRes(
+public record InsertADocumentResponse(
         String insertedId
 ) {
 }

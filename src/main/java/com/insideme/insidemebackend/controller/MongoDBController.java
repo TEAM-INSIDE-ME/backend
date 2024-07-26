@@ -1,7 +1,6 @@
 package com.insideme.insidemebackend.controller;
 
-import com.insideme.insidemebackend.dto.MongoDB.TestReq;
-import com.insideme.insidemebackend.dto.MongoDB.TestRes;
+import com.insideme.insidemebackend.dto.MongoDB.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,25 +18,38 @@ public class MongoDBController {
     @Value("${mongodb.app.id}")
     private String appId;
 
-    //Insert one document
-    @PostMapping("/insertOne")
-    public ResponseEntity<TestRes> insertOneDocument(@RequestBody TestReq request) {
-        String url = "https://data.mongodb-api.com/app/"+appId+"/endpoint/data/v1/action/insertOne";
-        TestRes testRes = restTemplate.postForObject(url, request, TestRes.class);
-        return ResponseEntity.ok(testRes);
-    }
+    @Value("${mongodb.api.endpoint}")
+    private String endPoint;
 
+    //Find a document
     @PostMapping("/findOne")
-    public ResponseEntity<TestRes> findOneDocument(@RequestBody TestReq request) {
-        String url = "https://data.mongodb-api.com/app/"+appId+"/endpoint/data/v1/action/findOne";
-        TestRes testRes = restTemplate.postForObject(url, request, TestRes.class);
-        return ResponseEntity.ok(testRes);
+    public ResponseEntity<FindADocumentResponse> findOneDocument(@RequestBody ADocumentRequestWithFilter aDocumentRequestWithFilter) {
+        String url = endPoint+appId+"/endpoint/data/v1/action/findOne";
+        FindADocumentResponse findADocumentResponse = restTemplate.postForObject(url, aDocumentRequestWithFilter, FindADocumentResponse.class);
+        return ResponseEntity.ok(findADocumentResponse);
     }
 
-    @PostMapping("/deleteMany")
-    public ResponseEntity<TestRes> deleteManyDocuments(@RequestBody TestReq request) {
-        String url = "https://data.mongodb-api.com/app/"+appId+"/endpoint/data/v1/action/deleteMany";
-        TestRes testRes = restTemplate.postForObject(url, request, TestRes.class);
-        return ResponseEntity.ok(testRes);
+    //Insert a document
+    @PostMapping("/insertOne")
+    public ResponseEntity<InsertADocumentResponse> insertOneDocument(@RequestBody InsertADocumentRequest insertADocumentRequest) {
+        String url = endPoint+appId+"/endpoint/data/v1/action/insertOne";
+        InsertADocumentResponse insertADocumentResponse = restTemplate.postForObject(url, insertADocumentRequest, InsertADocumentResponse.class);
+        return ResponseEntity.ok(insertADocumentResponse);
+    }
+
+    //Update a document
+    @PostMapping("/updateOne")
+    public ResponseEntity<UpdateADocumentResponse> updateOneDocument(@RequestBody UpdateADocumentRequest updateADocumentRequest) {
+        String url = endPoint+appId+"/endpoint/data/v1/action/updateOne";
+        UpdateADocumentResponse updateADocumentResponse = restTemplate.postForObject(url, updateADocumentRequest, UpdateADocumentResponse.class);
+        return ResponseEntity.ok(updateADocumentResponse);
+    }
+
+    //Delete a document
+    @PostMapping("/deleteOne")
+    public ResponseEntity<DeleteADocumentResponse> deleteOneDocument(@RequestBody ADocumentRequestWithFilter aDocumentRequestWithFilter) {
+        String url = endPoint+appId+"/endpoint/data/v1/action/deleteOne";
+        DeleteADocumentResponse deleteADocumentResponse = restTemplate.postForObject(url, aDocumentRequestWithFilter, DeleteADocumentResponse.class);
+        return ResponseEntity.ok(deleteADocumentResponse);
     }
 }
