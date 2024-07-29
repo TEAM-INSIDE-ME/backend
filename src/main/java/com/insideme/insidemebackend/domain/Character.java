@@ -20,13 +20,13 @@ public class Character {
     private String characterId; //mongodb에서 자동으로 생성하는 id
     private String userId;
     private CharacterState state;
-    private Queue<String> emotions;
+    private List<String> emotions;
 
     public Character() {
         this.emotions = new LinkedList<>();
     }
 
-    public Character(String characterId, String userId, CharacterState state, Queue<String> emotions) {
+    public Character(String characterId, String userId, CharacterState state, List<String> emotions) {
         this.characterId = characterId;
         this.userId = userId;
         this.state = state;
