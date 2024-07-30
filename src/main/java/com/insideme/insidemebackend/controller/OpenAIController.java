@@ -45,7 +45,6 @@ public class OpenAIController {
     public ResponseEntity<ListMessagesResponse> listMessages(@PathVariable("thread_id") String thread_id) {
         String url = "https://api.openai.com/v1/threads/" + thread_id + "/messages";
         ListMessagesResponse listMessagesResponse = restTemplate.getForObject(url, ListMessagesResponse.class);
-
         return ResponseEntity.ok(listMessagesResponse);
     }
 
