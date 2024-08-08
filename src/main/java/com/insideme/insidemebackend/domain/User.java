@@ -22,7 +22,8 @@ public class User {
     //private String provider;
     private String name;
     private String email;
-    private String sex;
+    private String refreshToken;
+    private String gender;
     private Date birth;
     private String job;
     private String time;    //유저가 선호하는 시간대

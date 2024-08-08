@@ -1,7 +1,6 @@
 package com.insideme.insidemebackend.controller;
 
 import com.insideme.insidemebackend.domain.Character;
-import com.insideme.insidemebackend.dto.characterDto.CreateRequest;
 import com.insideme.insidemebackend.service.CharacterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
