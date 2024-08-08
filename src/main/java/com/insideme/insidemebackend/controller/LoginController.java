@@ -1,15 +1,22 @@
 package com.insideme.insidemebackend.controller;
 
+import com.insideme.insidemebackend.domain.User;
+import com.insideme.insidemebackend.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
+@Slf4j
+@RequestMapping("/api/user")
 @RestController
 public class LoginController {
 
@@ -19,33 +26,43 @@ public class LoginController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @PostMapping("/api/user/kakao")
-    public ResponseEntity<Map<String, Object>> login(@RequestHeader("Authorization") String authorizationHeader) {
+    @Autowired
+    private UserService userService;
+    @PostMapping("/kakao")
+    public ResponseEntity<Map<String, Object>> login(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestHeader(value = "X-Refresh-Token", required = false) String refreshToken) {
         String accessToken = authorizationHeader.replace("Bearer ", "");
         System.out.println("Received access token: " + accessToken);
+        System.out.println("Received refresh token: " + refreshToken);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        String url = KAKAO_USER_INFO_URI + "?access_token=" + accessToken;
 
         try {
-            ResponseEntity<Map> response = restTemplate.exchange(KAKAO_USER_INFO_URI, HttpMethod.GET, entity, Map.class);
+            Map<String, Object> userInfo = restTemplate.getForObject(url, Map.class, headers);
 
-            System.out.println("Response from Kakao: " + response);
+            System.out.println("User info retrieved from Kakao: " + userInfo);
+            String user_id = userInfo.get("id").toString();
+            Map<String, Object> properties = (Map<String, Object>) userInfo.get("properties");
+            String name = properties.get("nickname").toString();
 
-            if (response.getStatusCode().is2xxSuccessful()) {
-                Map<String, Object> userInfo = response.getBody();
-                System.out.println("User info retrieved from Kakao: " + userInfo);
-                // 여기에서 userInfo를 처리하고 필요한 경우 사용자 데이터를 저장합니다.
-                return ResponseEntity.ok(userInfo);
-            } else {
-                System.out.println("Failed to retrieve user info from Kakao: " + response.getStatusCode());
-                return ResponseEntity.status(response.getStatusCode()).body(Map.of("error", "카카오 사용자 정보 가져오기 실패"));
-            }
+            //Map<String, Object> kakaoAccount = (Map<String, Object>) userInfo.get("kakao_account");
+            //Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+            //String profileNickname = profile.get("nickname").toString();
+            User newUser = new User(null,user_id,"Kakao",refreshToken,
+                    name,null,null,null,null,
+                    null,null,0,null);
+            userService.saveUser(newUser);
+
+            return ResponseEntity.ok(userInfo);
         } catch (Exception e) {
             System.out.println("Exception occurred while retrieving user info from Kakao");
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "서버 오류 발생"));
+            return ResponseEntity.status(500).body(Map.of("error", "서버 오류 발생"));
         }
     }
+
 }

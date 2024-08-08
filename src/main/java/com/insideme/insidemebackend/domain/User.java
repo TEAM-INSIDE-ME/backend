@@ -14,20 +14,21 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @ToString
-@Document(collection = "users")
+@Document(collection = "user")
 public class User {
     @Id
     private String id;  // MongoDB에서 자동 생성되는 고유 ID
-    //private String userID; //OAuth 에서 provider 가 제공하는 고유 사용자 ID
-    //private String provider;
+    private String user_id; //OAuth 에서 provider 가 제공하는 고유 사용자 ID
+    private String provider;
+    private String refreshToken;
     private String name;
     private String email;
-    private String refreshToken;
     private String gender;
     private Date birth;
     private String job;
-    private String time;    //유저가 선호하는 시간대
+    private String remind_time;    //유저가 선호하는 시간대 (알람 전송)
     private String purpose; //일기 작성 목적
-    private int reminder;   //일기 작성 주기
-    private List<String> diaryTBC;
+    private int frequency;   //일기 작성 주기
+    private List<String> Diaries_ids;
+
 }
