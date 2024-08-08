@@ -1,18 +1,13 @@
 package com.insideme.insidemebackend.controller;
 
 import com.insideme.insidemebackend.domain.Character;
-import com.insideme.insidemebackend.domain.Diary;
 import com.insideme.insidemebackend.domain.User;
 import com.insideme.insidemebackend.dto.user.CreateUserRequest;
-import com.insideme.insidemebackend.repository.UserRepository;
 import com.insideme.insidemebackend.service.CharacterService;
 import com.insideme.insidemebackend.service.UserService;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
