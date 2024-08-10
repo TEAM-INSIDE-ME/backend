@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,8 +17,9 @@ public class Character {
 
     public enum CharacterState {FIRST, SECOND, THIRD, FOURTH}
 
-    @Id
+    @Id @Field("_id")
     private String characterId; //mongodb에서 자동으로 생성하는 id
+
     private String userId;
     private CharacterState state;
     private List<String> emotions;
