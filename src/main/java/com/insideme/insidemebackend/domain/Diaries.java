@@ -23,6 +23,14 @@ public class Diaries {
     public void add(Diary diary) {
         this.diaries.add((diary));
     }
+    public void set(int index,Diary diary) {
+        this.diaries.set(index,diary);
+    }
+
+    public void remove(int index){
+        this.diaries.remove(index);
+    }
+
 
     public Diaries(String id, List<Diary> diaries) {
         this.id = id;

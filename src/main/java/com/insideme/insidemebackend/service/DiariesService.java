@@ -26,26 +26,41 @@ public class DiariesService {
         return diaries;
     }
 
-    public Diaries accessToDiaries(String user_id){
-        User user = userService.findUserByUserId(user_id);
-
-        String diaries_id=user.getDiariesIds().get(0);
-        Diaries diaries = diariesRepository.findById(diaries_id).get();
-        diaries.setId(diaries_id);
-        return diaries;
+    private Diaries getDiariesByUserId(String userId) {
+        User user = userService.findUserByUserId(userId);
+        String diariesId = user.getDiariesIds().get(0);
+        return diariesRepository.findById(diariesId).orElseThrow(() ->
+                new IllegalArgumentException("No diaries found for id: " + diariesId));
     }
 
-    public void saveADiary(String user_id, CreateADiaryRequest createADiaryRequest) {
-        Diaries diaries =accessToDiaries(user_id);
+    public void saveADiary(String userId, CreateADiaryRequest createADiaryRequest) {
+        Diaries diaries = getDiariesByUserId(userId);
 
         Diary diary = createADiaryRequest.toEntity();
         diaries.add(diary);
         diariesRepository.save(diaries);
     }
 
-    public Diary getADiary(String user_id, int index) {
-        Diaries diaries =accessToDiaries(user_id);
+    public Diary getADiary(String userId, int index) {
+        Diaries diaries = getDiariesByUserId(userId);
 
         return diaries.getDiaries().get(index);
+    }
+
+    public Diaries getDiaries(String userId) {
+        return getDiariesByUserId(userId);
+    }
+
+    public void updateADiary(String userId, int index, Diary diary) {
+        Diaries diaries = getDiariesByUserId(userId);
+
+        diaries.set(index, diary);
+        diariesRepository.save(diaries);
+    }
+
+    public void deleteADiary(String userId, int index) {
+        Diaries diaries = getDiariesByUserId(userId);
+        diaries.remove(index);
+        diariesRepository.save(diaries);
     }
 }
