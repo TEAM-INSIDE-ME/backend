@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.Map;
 
 @Slf4j
@@ -54,7 +55,7 @@ public class LoginController {
             //String profileNickname = profile.get("nickname").toString();
             User newUser = new User(null,user_id,"Kakao",refreshToken,
                     name,null,null,"1111",1,0,
-                    0,null,null,null,null,null,null);
+                    0,null,null,null,null,null, Collections.singletonList("66b4fd26521a923404bae37a"));
             userService.saveUser(newUser);
 
             return ResponseEntity.ok(userInfo);

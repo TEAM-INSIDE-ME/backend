@@ -2,28 +2,38 @@ package com.insideme.insidemebackend.service;
 
 import com.insideme.insidemebackend.domain.Diaries;
 import com.insideme.insidemebackend.domain.Diary;
+import com.insideme.insidemebackend.domain.User;
 import com.insideme.insidemebackend.dto.diaries.CreateADiaryRequest;
 import com.insideme.insidemebackend.repository.DiariesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class DiariesService {
 
-    @Autowired
-    DiariesRepository diariesRepository;
-    public Diaries findDiariesById(String id){
-        return diariesRepository.findById(id).get();
+    private final DiariesRepository diariesRepository;
+    private final UserService userService;
+
+    public Diaries initDiaries(){
+        List<Diary> emptyList = new LinkedList<>();
+        Diaries diaries = new Diaries(null, emptyList);
+        return diaries;
     }
-    public void saveADiary(CreateADiaryRequest createADiaryRequest) {
-        Diaries diaries = findDiariesById("66b4fd26521a923404bae37a");
-        diaries.setId("66b4fd26521a923404bae37a");
+
+    public void saveADiary(String user_id, CreateADiaryRequest createADiaryRequest) {
+        User user = userService.findUserByUserId(user_id);
+
+        String diaries_id=user.getDiariesIds().get(0);
+        Diaries diaries = diariesRepository.findById(diaries_id).get();
+        diaries.setId(diaries_id);
+
         Diary diary = createADiaryRequest.toEntity();
-        System.out.println(diaries);
         diaries.add(diary);
         diariesRepository.save(diaries);
     }

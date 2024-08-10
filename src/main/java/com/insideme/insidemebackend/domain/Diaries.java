@@ -8,12 +8,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @Document(collection = "diaries")
 public class Diaries {
     @Id
@@ -22,5 +22,10 @@ public class Diaries {
 
     public void add(Diary diary) {
         this.diaries.add((diary));
+    }
+
+    public Diaries(String id, List<Diary> diaries) {
+        this.id = id;
+        this.diaries = (diaries != null) ? diaries : new LinkedList<>();
     }
 }

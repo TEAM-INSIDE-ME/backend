@@ -17,13 +17,15 @@ public class DiariesController {
     @Autowired
     DiariesService diariesService;
 
-    @PostMapping("/createADiary")
-    public ResponseEntity<CreateADiaryRequest> createADiary(@RequestBody CreateADiaryRequest createADiaryRequest) {
-        log.info("Create diary request:" +  createADiaryRequest.toString());
-        diariesService.saveADiary(createADiaryRequest);
-        //log.info("Saved diary:" +  savedDiary.toString());
+    @PostMapping("/createADiary/{user_id}")
+    public ResponseEntity<CreateADiaryRequest> createADiary(@PathVariable("user_id") String user_id, @RequestBody CreateADiaryRequest createADiaryRequest) {
+
+        diariesService.saveADiary(user_id, createADiaryRequest);
+
         return ResponseEntity.ok(createADiaryRequest);
     }
+
+
 
     /*@GetMapping
     public ResponseEntity<List<Diary>> getAllDiary() {
