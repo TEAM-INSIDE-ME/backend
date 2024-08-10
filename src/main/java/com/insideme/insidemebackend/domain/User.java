@@ -25,6 +25,7 @@ public class User {
     private String name;
     private String email;
     private String remind_time;    //유저가 선호하는 시간대 (알람 전송)
+    private String password;
     private int frequency;   //일기 작성 주기
     private int weeks_of_consecutive_success; //주단위 연속 성공
     private int total_time; //총기록시간

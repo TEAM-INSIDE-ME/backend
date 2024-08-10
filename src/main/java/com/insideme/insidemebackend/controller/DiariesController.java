@@ -1,28 +1,28 @@
 package com.insideme.insidemebackend.controller;
 
+import com.insideme.insidemebackend.domain.Diaries;
 import com.insideme.insidemebackend.domain.Diary;
-import com.insideme.insidemebackend.dto.diary.CreateDiaryRequest;
-import com.insideme.insidemebackend.service.DiaryService;
+import com.insideme.insidemebackend.dto.diaries.CreateADiaryRequest;
+import com.insideme.insidemebackend.service.DiariesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RequestMapping("/api/diary")
+@RequestMapping("/api/diaries")
 @RestController
-public class DiaryController {
+public class DiariesController {
 
     @Autowired
-    DiaryService diaryService;
+    DiariesService diariesService;
 
-    @PostMapping("/createDiary")
-    public ResponseEntity<Diary> createDiary(@RequestBody CreateDiaryRequest createDiaryRequest) {
-        log.info("Create diary request:" +  createDiaryRequest.toString());
-        Diary newDiary = createDiaryRequest.toEntity(createDiaryRequest);
-        Diary savedDiary = diaryService.saveDiary(newDiary);
-        log.info("Saved diary:" +  savedDiary.toString());
-        return ResponseEntity.ok(savedDiary);
+    @PostMapping("/createADiary")
+    public ResponseEntity<CreateADiaryRequest> createADiary(@RequestBody CreateADiaryRequest createADiaryRequest) {
+        log.info("Create diary request:" +  createADiaryRequest.toString());
+        diariesService.saveADiary(createADiaryRequest);
+        //log.info("Saved diary:" +  savedDiary.toString());
+        return ResponseEntity.ok(createADiaryRequest);
     }
 
     /*@GetMapping

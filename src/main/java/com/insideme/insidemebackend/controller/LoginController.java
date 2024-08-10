@@ -53,7 +53,7 @@ public class LoginController {
             //Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
             //String profileNickname = profile.get("nickname").toString();
             User newUser = new User(null,user_id,"Kakao",refreshToken,
-                    name,null,null,1,0,
+                    name,null,null,"1111",1,0,
                     0,null,null,null,null,null,null);
             userService.saveUser(newUser);
 
