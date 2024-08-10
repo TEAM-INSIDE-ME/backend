@@ -19,13 +19,16 @@ public class DiariesController {
 
     @PostMapping("/createADiary/{user_id}")
     public ResponseEntity<CreateADiaryRequest> createADiary(@PathVariable("user_id") String user_id, @RequestBody CreateADiaryRequest createADiaryRequest) {
-
         diariesService.saveADiary(user_id, createADiaryRequest);
 
         return ResponseEntity.ok(createADiaryRequest);
     }
 
-
+    @GetMapping("getADiary/{user_id}")
+    public ResponseEntity<Diary> getADiary(@PathVariable("user_id") String user_id, @RequestParam int index) {
+        Diary diary = diariesService.getADiary(user_id, index);
+        return ResponseEntity.ok(diary);
+    }
 
     /*@GetMapping
     public ResponseEntity<List<Diary>> getAllDiary() {
@@ -33,9 +36,5 @@ public class DiariesController {
         return ResponseEntity.ok(diaries);
     }*/
 
-    /*@GetMapping("/{diary_id}")
-    public ResponseEntity<Diary> getDiaryById(@PathVariable String diary_id) {
-        Diary diary = diaryService.getDiaryID();
-        return ResponseEntity.ok(diary);
-    }*/
+
 }

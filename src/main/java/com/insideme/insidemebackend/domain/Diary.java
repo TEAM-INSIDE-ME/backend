@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 public class Diary {
 
-    private int id;
     private Date created_at;
     private boolean bookmark;
     private int emotion;

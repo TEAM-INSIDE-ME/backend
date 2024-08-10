@@ -26,19 +26,26 @@ public class DiariesService {
         return diaries;
     }
 
-    public void saveADiary(String user_id, CreateADiaryRequest createADiaryRequest) {
+    public Diaries accessToDiaries(String user_id){
         User user = userService.findUserByUserId(user_id);
 
         String diaries_id=user.getDiariesIds().get(0);
         Diaries diaries = diariesRepository.findById(diaries_id).get();
         diaries.setId(diaries_id);
+        return diaries;
+    }
+
+    public void saveADiary(String user_id, CreateADiaryRequest createADiaryRequest) {
+        Diaries diaries =accessToDiaries(user_id);
 
         Diary diary = createADiaryRequest.toEntity();
         diaries.add(diary);
         diariesRepository.save(diaries);
     }
 
+    public Diary getADiary(String user_id, int index) {
+        Diaries diaries =accessToDiaries(user_id);
 
-
-
+        return diaries.getDiaries().get(index);
+    }
 }
