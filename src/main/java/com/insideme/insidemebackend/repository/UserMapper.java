@@ -9,7 +9,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper {
-    void updateUserFromDto(UserInfoRequest dto, @MappingTarget User entity);
     void initUserFromDto(InitUserRequest dto, @MappingTarget User entity);
+    void updateUserFromDto(UserInfoRequest dto, @MappingTarget User entity);
 
 }
