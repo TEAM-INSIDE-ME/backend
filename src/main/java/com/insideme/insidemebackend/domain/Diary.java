@@ -1,6 +1,5 @@
 package com.insideme.insidemebackend.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ public class Diary {
 
     private Date created_at;
     private boolean bookmark;
-    private int emotion;
+    private Integer emotion;
     private String font;
     private String title;
     private String content;

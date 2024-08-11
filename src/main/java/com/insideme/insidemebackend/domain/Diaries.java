@@ -1,12 +1,12 @@
 package com.insideme.insidemebackend.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class Diaries {
     @Id
     private String id; //몽고디비에서 자동으로 생성하는 id
-    List<Diary> diaries  = new ArrayList<>();
+    private List<Diary> diaries;
 
     public void add(Diary diary) {
         this.diaries.add((diary));
@@ -34,6 +34,6 @@ public class Diaries {
 
     public Diaries(String id, List<Diary> diaries) {
         this.id = id;
-        this.diaries = (diaries != null) ? diaries : new LinkedList<>();
+        this.diaries = (diaries != null) ? diaries : new ArrayList<>();
     }
 }

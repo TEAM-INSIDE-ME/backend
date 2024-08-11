@@ -4,20 +4,17 @@ import com.insideme.insidemebackend.domain.Diaries;
 import com.insideme.insidemebackend.domain.Diary;
 import com.insideme.insidemebackend.dto.diaries.CreateADiaryRequest;
 import com.insideme.insidemebackend.service.DiariesService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
-@Slf4j
 @RequestMapping("/api/diaries")
 @RestController
+@RequiredArgsConstructor // auto DI ,final 객체만 DI
 public class DiariesController {
 
-    @Autowired
-    DiariesService diariesService;
+    private final DiariesService diariesService;
 
     @PostMapping("/createADiary/{user_id}")
     public ResponseEntity<CreateADiaryRequest> createADiary(@PathVariable("user_id") String userId, @RequestBody CreateADiaryRequest createADiaryRequest) {

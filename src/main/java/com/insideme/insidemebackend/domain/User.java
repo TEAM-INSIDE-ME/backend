@@ -31,11 +31,11 @@ public class User {
     @Field("remind_time")
     private String remindTime;    //유저가 선호하는 시간대 (알람 전송)
     private String password;
-    private int frequency;   //일기 작성 주기
+    private Integer frequency;   //일기 작성 주기
     @Field("weeks_of_consecutive_success")
-    private int weeksOfConsecutiveSuccess; //주단위 연속 성공
+    private Integer weeksOfConsecutiveSuccess; //주단위 연속 성공
     @Field("total_time")
-    private int totalTime; //총기록시간
+    private Integer totalTime; //총기록시간
 
     private String gender;
     private Date birth;

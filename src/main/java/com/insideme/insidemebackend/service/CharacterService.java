@@ -2,7 +2,7 @@ package com.insideme.insidemebackend.service;
 
 import com.insideme.insidemebackend.domain.Character;
 import com.insideme.insidemebackend.repository.CharacterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 
+@RequiredArgsConstructor
 @Service
 public class CharacterService {
 
-    @Autowired
-    private CharacterRepository characterRepository;
+    private final CharacterRepository characterRepository;
 
     public Character initCharacter(){
         List<String> emptyList = new LinkedList<>();

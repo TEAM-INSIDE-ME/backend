@@ -5,29 +5,29 @@ import com.insideme.insidemebackend.domain.Diary;
 import com.insideme.insidemebackend.domain.User;
 import com.insideme.insidemebackend.dto.diaries.CreateADiaryRequest;
 import com.insideme.insidemebackend.repository.DiariesRepository;
+import com.insideme.insidemebackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class DiariesService {
-
+    private final UserRepository userRepository;
     private final DiariesRepository diariesRepository;
-    private final UserService userService;
+    private final MongoDBService mongoDBService;
 
-    public Diaries initDiaries(){
-        List<Diary> emptyList = new LinkedList<>();
+    public List<String> initDiaries(){
+        List<Diary> emptyList = new ArrayList<>();
         Diaries diaries = new Diaries(null, emptyList);
-        return diaries;
+        return Collections.singletonList(diariesRepository.save(diaries).getId());
     }
 
     private Diaries getDiariesByUserId(String userId) {
-        User user = userService.findUserByUserId(userId);
+        User user = mongoDBService.findUserByUserId(userRepository, userId);
         String diariesId = user.getDiariesIds().get(0);
         return diariesRepository.findById(diariesId).orElseThrow(() ->
                 new IllegalArgumentException("No diaries found for id: " + diariesId));

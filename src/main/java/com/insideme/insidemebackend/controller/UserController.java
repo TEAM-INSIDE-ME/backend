@@ -1,8 +1,9 @@
 package com.insideme.insidemebackend.controller;
 
 import com.insideme.insidemebackend.domain.User;
+import com.insideme.insidemebackend.dto.user.UserInfoRequest;
 import com.insideme.insidemebackend.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -13,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.Map;
 
-@Slf4j
 @RequestMapping("/api/user")
 @RestController
-public class LoginController {
+@RequiredArgsConstructor // auto DI ,final 객체만 DI
+public class UserController {
 
     private static final String KAKAO_USER_INFO_URI = "https://kapi.kakao.com/v2/user/me";
 
@@ -27,10 +27,9 @@ public class LoginController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
     @PostMapping("/kakao")
-    public ResponseEntity<Map<String, Object>> login(
+    public ResponseEntity<Map<String, Object>> kakaoLogin(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestHeader(value = "X-Refresh-Token", required = false) String refreshToken) {
         String accessToken = authorizationHeader.replace("Bearer ", "");
@@ -50,13 +49,7 @@ public class LoginController {
             Map<String, Object> properties = (Map<String, Object>) userInfo.get("properties");
             String name = properties.get("nickname").toString();
 
-            //Map<String, Object> kakaoAccount = (Map<String, Object>) userInfo.get("kakao_account");
-            //Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
-            //String profileNickname = profile.get("nickname").toString();
-            User newUser = new User(null,user_id,"Kakao",refreshToken,
-                    name,null,null,"1111",1,0,
-                    0,null,null,null,null,null, Collections.singletonList("66b4fd26521a923404bae37a"));
-            userService.saveUser(newUser);
+            userService.initUser(user_id,"Kakao",refreshToken,name);
 
             return ResponseEntity.ok(userInfo);
         } catch (Exception e) {
@@ -65,5 +58,12 @@ public class LoginController {
             return ResponseEntity.status(500).body(Map.of("error", "서버 오류 발생"));
         }
     }
+
+    @PostMapping("/updateUserInfo")
+    public ResponseEntity<User> updateUserInfo(String userId,UserInfoRequest userInfoRequest){
+        return ResponseEntity.ok(userService.updateUserInfo(userId,userInfoRequest));
+    }
+
+
 
 }

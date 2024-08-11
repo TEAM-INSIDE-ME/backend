@@ -1,50 +1,39 @@
 package com.insideme.insidemebackend.controller;
 
 import com.insideme.insidemebackend.dto.OpenAI.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.insideme.insidemebackend.service.OpenAIService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+
 @RestController
 @RequestMapping("/api/openai")
+@RequiredArgsConstructor // auto DI ,final 객체만 DI
 public class OpenAIController {
-    @Qualifier("openAIrestTemplate")
-    @Autowired
-    private RestTemplate restTemplate;
 
-    //Create Message
+    private final OpenAIService openAIService;
+
     @PostMapping("/createMessage/{thread_id}")
     public ResponseEntity<IdResponse> createMessage(@PathVariable("thread_id") String thread_id, @RequestBody CreateMessageRequest createMessageRequest) {
-        String url = "https://api.openai.com/v1/threads/" + thread_id + "/messages";
-        IdResponse idResponse = restTemplate.postForObject(url, createMessageRequest, IdResponse.class);
-
+        IdResponse idResponse = openAIService.createMessage(thread_id, createMessageRequest);
         return ResponseEntity.ok(idResponse);
     }
 
-    //Create Run
     @PostMapping("/createRun/{thread_id}")
     public ResponseEntity<IdResponse> createRun(@PathVariable("thread_id") String thread_id, @RequestBody CreateRunRequest createRunRequest) {
-        String url = "https://api.openai.com/v1/threads/" + thread_id + "/runs";
-        IdResponse idResponse = restTemplate.postForObject(url, createRunRequest, IdResponse.class);
-
+        IdResponse idResponse = openAIService.createRun(thread_id, createRunRequest);
         return ResponseEntity.ok(idResponse);
     }
 
-    //Create Thread
     @PostMapping("/createThread")
     public ResponseEntity<IdResponse> createThread(@RequestBody CreateThreadRequest createThreadRequest) {
-        String url = "https://api.openai.com/v1/threads";
-        IdResponse idResponse = restTemplate.postForObject(url, createThreadRequest, IdResponse.class);
-
+        IdResponse idResponse = openAIService.createThread(createThreadRequest);
         return ResponseEntity.ok(idResponse);
     }
 
-    //List Messages
     @GetMapping("/listMessages/{thread_id}")
     public ResponseEntity<ListMessagesResponse> listMessages(@PathVariable("thread_id") String thread_id) {
-        String url = "https://api.openai.com/v1/threads/" + thread_id + "/messages";
-        ListMessagesResponse listMessagesResponse = restTemplate.getForObject(url, ListMessagesResponse.class);
+        ListMessagesResponse listMessagesResponse = openAIService.listMessages(thread_id);
         return ResponseEntity.ok(listMessagesResponse);
     }
 
