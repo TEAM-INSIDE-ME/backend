@@ -20,7 +20,7 @@ public class DiariesService {
     private final DiariesRepository diariesRepository;
     private final MongoDBService mongoDBService;
 
-    public List<String> initDiaries(){
+    public List<String> createDiaries(){
         List<Diary> emptyList = new ArrayList<>();
         Diaries diaries = new Diaries(null, emptyList);
         return Collections.singletonList(diariesRepository.save(diaries).getId());
