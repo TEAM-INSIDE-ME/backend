@@ -24,6 +24,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public User initUserInfo(String userId, InitUserRequest initUserRequest) {
         User user = mongoDBService.findUserByUserId(userRepository, userId);
         userMapper.initUserFromDto(initUserRequest, user);

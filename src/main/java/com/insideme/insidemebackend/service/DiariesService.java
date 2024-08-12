@@ -19,6 +19,7 @@ public class DiariesService {
     private final UserRepository userRepository;
     private final DiariesRepository diariesRepository;
     private final MongoDBService mongoDBService;
+    private final OpenAIService openAIService;
 
     public List<String> createDiaries(){
         List<Diary> emptyList = new ArrayList<>();
@@ -35,8 +36,10 @@ public class DiariesService {
 
     public void saveADiary(String userId, CreateADiaryRequest createADiaryRequest) {
         Diaries diaries = getDiariesByUserId(userId);
-
+        User user = mongoDBService.findUserByUserId(userRepository, userId);
+        String threadId=user.getThreadId();
         Diary diary = createADiaryRequest.toEntity();
+        diary.setAnalysis_question(openAIService.getAnalysis_question(threadId,createADiaryRequest.content()));
         diaries.add(diary);
         diariesRepository.save(diaries);
     }
