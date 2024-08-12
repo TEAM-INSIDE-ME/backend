@@ -35,7 +35,7 @@ public class User {
     @Field("weeks_of_consecutive_success")
     private Integer weeksOfConsecutiveSuccess; //주단위 연속 성공
     @Field("total_time")
-    private Integer totalTime; //총기록시간
+    private Integer totalMinute; //총기록시간
 
     private String gender;
     private Date birth;

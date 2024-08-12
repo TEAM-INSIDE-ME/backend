@@ -1,8 +1,8 @@
 package com.insideme.insidemebackend.controller;
 
-import com.insideme.insidemebackend.domain.User;
 import com.insideme.insidemebackend.dto.user.InitUserRequest;
-import com.insideme.insidemebackend.dto.user.UserInfoRequest;
+import com.insideme.insidemebackend.dto.user.UserInfo;
+import com.insideme.insidemebackend.repository.UserMapper;
 import com.insideme.insidemebackend.service.OpenAIService;
 import com.insideme.insidemebackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,7 @@ public class UserController {
     private RestTemplate restTemplate;
 
     private final UserService userService;
+    private final UserMapper userMapper;
     private final OpenAIService openAIService;
     @PostMapping("/kakao")
     public ResponseEntity<Map<String, Object>> kakaoLogin(
@@ -60,17 +61,23 @@ public class UserController {
     }
 
     @PostMapping("/initUser/{user_id}")
-    public ResponseEntity<User> initUser(@PathVariable("user_id") String userId, @RequestBody InitUserRequest initUserRequest){
+    public ResponseEntity<UserInfo> initUser(@PathVariable("user_id") String userId, @RequestBody InitUserRequest initUserRequest){
         initUserRequest.setThreadId(openAIService.createThread(
                 initUserRequest.getName(), initUserRequest.getFrequency(),
                 initUserRequest.getGender(),initUserRequest.getBirth(),
                 initUserRequest.getJob(),initUserRequest.getPurpose()).id());
-        return ResponseEntity.ok(userService.initUserInfo(userId,initUserRequest));
+        userService.initUserInfo(userId,initUserRequest);
+
+        UserInfo userInfo = userMapper.initUserRequestToUserResponse(initUserRequest);
+
+        return ResponseEntity.ok(userInfo);
     }
 
     @PostMapping("/updateUserInfo/{user_id}")
-    public ResponseEntity<User> updateUserInfo(@PathVariable("user_id") String userId, @RequestBody UserInfoRequest userInfoRequest){
-        return ResponseEntity.ok(userService.updateUserInfo(userId,userInfoRequest));
+    public ResponseEntity<UserInfo> updateUserInfo(@PathVariable("user_id") String userId, @RequestBody UserInfo userInfo){
+        userService.updateUserInfo(userId, userInfo);
+
+        return ResponseEntity.ok(userInfo);
     }
 
 

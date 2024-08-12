@@ -2,7 +2,7 @@ package com.insideme.insidemebackend.service;
 
 import com.insideme.insidemebackend.domain.User;
 import com.insideme.insidemebackend.dto.user.InitUserRequest;
-import com.insideme.insidemebackend.dto.user.UserInfoRequest;
+import com.insideme.insidemebackend.dto.user.UserInfo;
 import com.insideme.insidemebackend.repository.UserMapper;
 import com.insideme.insidemebackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +25,16 @@ public class UserService {
     }
 
     @Transactional
-    public User initUserInfo(String userId, InitUserRequest initUserRequest) {
+    public void initUserInfo(String userId, InitUserRequest initUserRequest) {
         User user = mongoDBService.findUserByUserId(userRepository, userId);
         userMapper.initUserFromDto(initUserRequest, user);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Transactional
-    public User updateUserInfo(String userId, UserInfoRequest userInfoRequest) {
+    public User updateUserInfo(String userId, UserInfo userInfo) {
         User user = mongoDBService.findUserByUserId(userRepository, userId);
-        userMapper.updateUserFromDto(userInfoRequest, user);
+        userMapper.updateUserFromDto(userInfo, user);
         return userRepository.save(user);
     }
 

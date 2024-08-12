@@ -37,9 +37,11 @@ public class DiariesService {
     public void saveADiary(String userId, CreateADiaryRequest createADiaryRequest) {
         Diaries diaries = getDiariesByUserId(userId);
         User user = mongoDBService.findUserByUserId(userRepository, userId);
-        String threadId=user.getThreadId();
         Diary diary = createADiaryRequest.toEntity();
+
+        String threadId=user.getThreadId();
         diary.setAnalysis_question(openAIService.getAnalysis_question(threadId,createADiaryRequest.content()));
+
         diaries.add(diary);
         diariesRepository.save(diaries);
     }
