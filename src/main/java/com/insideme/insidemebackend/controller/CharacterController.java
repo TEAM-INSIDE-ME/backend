@@ -17,7 +17,6 @@ public class CharacterController {
     @Autowired
     private CharacterService characterService;
 
-    private String userId;
 
     @PostMapping("/createCharacter")
     public ResponseEntity<Character> createCharacter() {

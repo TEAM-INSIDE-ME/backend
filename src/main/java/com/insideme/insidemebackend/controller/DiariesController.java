@@ -35,14 +35,14 @@ public class DiariesController {
         return ResponseEntity.ok(diaries);
     }
 
-    @PostMapping("/updateADiary/{user_id}")
+    @PutMapping("/updateADiary/{user_id}")
     public ResponseEntity<Diary> updateADiary(@PathVariable("user_id") String userId, @RequestParam int index, @RequestBody Diary diary) {
         diariesService.updateADiary(userId, index, diary);
 
         return ResponseEntity.ok(diary);
     }
 
-    @PostMapping("/deleteADiary/{user_id}")
+    @DeleteMapping("/deleteADiary/{user_id}")
     public ResponseEntity<Integer> deleteADiary(@PathVariable("user_id") String userId, @RequestParam int index) {
         diariesService.deleteADiary(userId, index);
 

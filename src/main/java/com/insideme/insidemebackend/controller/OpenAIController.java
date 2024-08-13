@@ -19,18 +19,6 @@ public class OpenAIController {
         return ResponseEntity.ok(idResponse);
     }
 
-//    @PostMapping("/createRun/{thread_id}")
-//    public ResponseEntity<IdResponse> createRun(@PathVariable("thread_id") String thread_id, @RequestBody CreateRunRequest createRunRequest) {
-//        IdResponse idResponse = openAIService.createRun(thread_id, createRunRequest);
-//        return ResponseEntity.ok(idResponse);
-//    }
-
-//    @PostMapping("/createThread")
-//    public ResponseEntity<IdResponse> createThread(@RequestBody CreateMessageRequest createMessageRequest) {
-//        IdResponse idResponse = openAIService.createThread(createMessageRequest);
-//        return ResponseEntity.ok(idResponse);
-//    }
-
     @GetMapping("/listMessages/{thread_id}")
     public ResponseEntity<ListMessagesResponse> listMessages(@PathVariable("thread_id") String thread_id) {
         ListMessagesResponse listMessagesResponse = openAIService.listMessages(thread_id);

@@ -42,19 +42,8 @@ public class OpenAIService {
         return restTemplate.postForObject(url, createRunRequest, IdResponse.class);
     }
 
-//    private RunResponse retrieveRun(String threadId, String runId) {
-//        String url = "https://api.openai.com/v1/threads/" + threadId + "/runs/" + runId;
-//        return restTemplate.getForObject(url, RunResponse.class);
-//    }
-
-//    private boolean checkRunStatus(String threadId, String runId) {
-//        if (!"".equals(retrieveRun(threadId, runId).completed_at()))
-//            return true;
-//        return false;
-//    }
-
     public String getAMessageFromEmotionBot(String threadId, String msg,String additionalInstructions) {
-        String runId = createRun(threadId, msg, additionalInstructions).id();
+        createRun(threadId, msg, additionalInstructions).id();
 
         String value = checkMessage(threadId);
         while ("".equals(value)){
@@ -82,8 +71,6 @@ public class OpenAIService {
         }
         return "";
     }
-
-
 
     public ListMessagesResponse listMessages(String threadId) {
         String url = "https://api.openai.com/v1/threads/" + threadId + "/messages";
