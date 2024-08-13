@@ -37,13 +37,13 @@ public class OpenAIService {
         List<CreateMessageRequest> createMessageRequestList = new ArrayList<>(Arrays.asList(createMessageRequest));
         Object responseFormat = new Object() {public final String type = "json_object";};
         CreateRunRequest createRunRequest = new CreateRunRequest(assistantId,additionalInstructions, createMessageRequestList,
-                256,200,responseFormat);
+                500,500,responseFormat);
         String url = "https://api.openai.com/v1/threads/" + threadId + "/runs";
         return restTemplate.postForObject(url, createRunRequest, IdResponse.class);
     }
 
     public String getAMessageFromEmotionBot(String threadId, String msg,String additionalInstructions) {
-        createRun(threadId, msg, additionalInstructions).id();
+        createRun(threadId, msg, additionalInstructions);
 
         String value = checkMessage(threadId);
         while ("".equals(value)){

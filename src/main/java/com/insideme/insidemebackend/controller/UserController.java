@@ -1,8 +1,8 @@
 package com.insideme.insidemebackend.controller;
 
+import com.insideme.insidemebackend.dto.OpenAI.Text;
 import com.insideme.insidemebackend.dto.user.InitUserRequest;
 import com.insideme.insidemebackend.dto.user.UserInfo;
-import com.insideme.insidemebackend.repository.UserMapper;
 import com.insideme.insidemebackend.service.OpenAIService;
 import com.insideme.insidemebackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,6 @@ public class UserController {
     private RestTemplate restTemplate;
 
     private final UserService userService;
-    private final OpenAIService openAIService;
     @PostMapping("/kakao")
     public ResponseEntity<Map<String, Object>> kakaoLogin(
             @RequestHeader("Authorization") String authorizationHeader,
@@ -62,6 +61,11 @@ public class UserController {
     @PostMapping("/initUser/{user_id}")
     public ResponseEntity<String> initUser(@PathVariable("user_id") String userId, @RequestBody InitUserRequest initUserRequest){
         return ResponseEntity.ok(userService.initUserInfo(userId,initUserRequest));
+    }
+
+    @PostMapping("/chat/{user_id}")
+    public ResponseEntity<String> chatWithEmotionBot(@PathVariable("user_id") String userId, @RequestBody Text text){
+        return ResponseEntity.ok(userService.chatWithEmotionBot(userId,text));
     }
 
     @PutMapping("/updateUserInfo/{user_id}")

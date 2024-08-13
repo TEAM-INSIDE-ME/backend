@@ -17,10 +17,8 @@ public class DiariesController {
     private final DiariesService diariesService;
 
     @PostMapping("/createADiary/{user_id}")
-    public ResponseEntity<CreateADiaryRequest> createADiary(@PathVariable("user_id") String userId, @RequestBody CreateADiaryRequest createADiaryRequest) {
-        diariesService.saveADiary(userId, createADiaryRequest);
-
-        return ResponseEntity.ok(createADiaryRequest);
+    public ResponseEntity<String> createADiary(@PathVariable("user_id") String userId, @RequestBody CreateADiaryRequest createADiaryRequest) {
+        return ResponseEntity.ok(diariesService.createADiary(userId, createADiaryRequest));
     }
 
     @GetMapping("getADiary/{user_id}")

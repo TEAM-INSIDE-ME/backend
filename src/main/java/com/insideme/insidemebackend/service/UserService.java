@@ -1,6 +1,7 @@
 package com.insideme.insidemebackend.service;
 
 import com.insideme.insidemebackend.domain.User;
+import com.insideme.insidemebackend.dto.OpenAI.Text;
 import com.insideme.insidemebackend.dto.user.InitUserRequest;
 import com.insideme.insidemebackend.dto.user.UserInfo;
 import com.insideme.insidemebackend.repository.UserMapper;
@@ -39,6 +40,13 @@ public class UserService {
                 ". 나는 일기를 일주일 중" + initUserRequest.frequency()+ "번씩 쓰려고 해. 이 일기를 쓰는 목적은 "
                         + initUserRequest.purpose()+"이야","");
     }
+
+    public String chatWithEmotionBot(String userId, Text text){
+        User user = mongoDBService.findUserByUserId(userRepository, userId);
+        return openAIService.getAMessageFromEmotionBot(user.getThreadId(),text.value()
+                ,"");
+    }
+
 
     @Transactional
     public User updateUserInfo(String userId, UserInfo userInfo) {

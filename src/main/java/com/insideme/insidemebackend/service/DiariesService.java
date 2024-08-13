@@ -22,7 +22,7 @@ public class DiariesService {
     private final OpenAIService openAIService;
 
     private static final String ADDITIONAL_INSTRUCTIONS_FOR_DIARY_ENTRY
-            = "Please read this diary and select the image number from the file that best represents the user's mood. Analyze the diary and ask a question that will make the user's day look back, make the user's life better, and get to know the user better. So please send {number, analyze_question} in json format.";
+            = "Please read this diary and select the image number using file_search that best represents the user's mood. Analyze the diary and ask a question that will make the user's life better, and get to know the user better. So response in this {number, analyze_question} format.";
 
 
     public List<String> createDiaries(){
@@ -38,17 +38,23 @@ public class DiariesService {
                 new IllegalArgumentException("No diaries found for id: " + diariesId));
     }
 
-    public void saveADiary(String userId, CreateADiaryRequest createADiaryRequest) {
-        Diaries diaries = getDiariesByUserId(userId);
+    private String getOutput(String userId, String content){
         User user = mongoDBService.findUserByUserId(userRepository, userId);
+        return openAIService.getAMessageFromEmotionBot(
+                user.getThreadId(),content,ADDITIONAL_INSTRUCTIONS_FOR_DIARY_ENTRY);
+    }
+
+    public String createADiary(String userId, CreateADiaryRequest createADiaryRequest) {
+        Diaries diaries = getDiariesByUserId(userId);
         Diary diary = createADiaryRequest.toEntity();
 
-        diary.setAnalysis_question(openAIService.getAMessageFromEmotionBot(
-                user.getThreadId(),createADiaryRequest.content(),ADDITIONAL_INSTRUCTIONS_FOR_DIARY_ENTRY));
-
+        diary.setOutput(getOutput(userId, diary.getContent()));
         diaries.add(diary);
         diariesRepository.save(diaries);
+
+        return diary.getOutput();
     }
+
 
     public Diary getADiary(String userId, int index) {
         Diaries diaries = getDiariesByUserId(userId);
