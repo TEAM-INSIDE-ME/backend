@@ -10,7 +10,7 @@ public class OpenAIConfig {
     @Value("${openai.api.key}")
     private String apiKey;
     @Bean
-    public RestTemplate openAIrestTemplate(){
+    public RestTemplate openAIRestTemplate(){
         RestTemplate openAIrestTemplate = new RestTemplate();
         openAIrestTemplate.getInterceptors().add((request, body, execution) -> {
             request.getHeaders().add("Content-Type", "application/json");

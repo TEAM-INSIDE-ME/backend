@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/api/mongodb")
 @RestController
 public class MongoDBController {
-    @Qualifier("mongoDBrestTemplate")
+    @Qualifier("mongoDBRestTemplate")
     @Autowired
     private RestTemplate restTemplate;
 

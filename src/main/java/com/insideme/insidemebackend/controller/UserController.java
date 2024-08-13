@@ -27,7 +27,6 @@ public class UserController {
     private RestTemplate restTemplate;
 
     private final UserService userService;
-    private final UserMapper userMapper;
     private final OpenAIService openAIService;
     @PostMapping("/kakao")
     public ResponseEntity<Map<String, Object>> kakaoLogin(
@@ -61,25 +60,24 @@ public class UserController {
     }
 
     @PostMapping("/initUser/{user_id}")
-    public ResponseEntity<UserInfo> initUser(@PathVariable("user_id") String userId, @RequestBody InitUserRequest initUserRequest){
-        initUserRequest.setThreadId(openAIService.createThread(
-                initUserRequest.getName(), initUserRequest.getFrequency(),
-                initUserRequest.getGender(),initUserRequest.getBirth(),
-                initUserRequest.getJob(),initUserRequest.getPurpose()).id());
-        userService.initUserInfo(userId,initUserRequest);
-
-        UserInfo userInfo = userMapper.initUserRequestToUserResponse(initUserRequest);
-
-        return ResponseEntity.ok(userInfo);
+    public ResponseEntity<String> initUser(@PathVariable("user_id") String userId, @RequestBody InitUserRequest initUserRequest){
+        return ResponseEntity.ok(userService.initUserInfo(userId,initUserRequest));
     }
 
-    @PostMapping("/updateUserInfo/{user_id}")
+    @PutMapping("/updateUserInfo/{user_id}")
     public ResponseEntity<UserInfo> updateUserInfo(@PathVariable("user_id") String userId, @RequestBody UserInfo userInfo){
         userService.updateUserInfo(userId, userInfo);
 
         return ResponseEntity.ok(userInfo);
     }
 
+    @GetMapping("/getUserInfo/{user_id}")
+    public ResponseEntity<UserInfo> getUserInfo(@PathVariable("user_id") String userId){
+        return ResponseEntity.ok(userService.getUserInfo(userId));
+    }
 
-
+    @DeleteMapping("/deleteUser/{user_id}")
+    public ResponseEntity<Integer> deleteUser(@PathVariable("user_id") String userId){
+        return ResponseEntity.ok(userService.deleteUser(userId));
+    }
 }

@@ -21,6 +21,10 @@ public class DiariesService {
     private final MongoDBService mongoDBService;
     private final OpenAIService openAIService;
 
+    private static final String ADDITIONAL_INSTRUCTIONS_FOR_DIARY_ENTRY
+            = "Please read this diary and select the image number from the file that best represents the user's mood. Analyze the diary and ask a question that will make the user's day look back, make the user's life better, and get to know the user better. So please send {number, analyze_question} in json format.";
+
+
     public List<String> createDiaries(){
         List<Diary> emptyList = new ArrayList<>();
         Diaries diaries = new Diaries(null, emptyList);
@@ -39,8 +43,8 @@ public class DiariesService {
         User user = mongoDBService.findUserByUserId(userRepository, userId);
         Diary diary = createADiaryRequest.toEntity();
 
-        String threadId=user.getThreadId();
-        diary.setAnalysis_question(openAIService.getAnalysis_question(threadId,createADiaryRequest.content()));
+        diary.setAnalysis_question(openAIService.getAMessageFromEmotionBot(
+                user.getThreadId(),createADiaryRequest.content(),ADDITIONAL_INSTRUCTIONS_FOR_DIARY_ENTRY));
 
         diaries.add(diary);
         diariesRepository.save(diaries);
