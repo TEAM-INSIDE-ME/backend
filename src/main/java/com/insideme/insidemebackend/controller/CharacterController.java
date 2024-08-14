@@ -1,6 +1,7 @@
 package com.insideme.insidemebackend.controller;
 
 import com.insideme.insidemebackend.domain.Character;
+import com.insideme.insidemebackend.repository.CharacterMapper;
 import com.insideme.insidemebackend.service.CharacterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class CharacterController {
     @PostMapping("/createCharacter")
     public ResponseEntity<Character> createCharacter() {
         Character newCharacter = characterService.initCharacter();
-        Character savedCharacter = characterService.CreateCharacter(newCharacter);
+        Character savedCharacter = characterService.saveCharacter(newCharacter);
         return ResponseEntity.ok(savedCharacter);
     }
 
@@ -31,5 +32,12 @@ public class CharacterController {
         System.out.println(userId);
         System.out.println(character.toString());
         return character;
+    }
+
+    @PostMapping("/{userId}")
+    public ResponseEntity<Character> updateCharacter(@PathVariable String userId, boolean achievement){
+        Character updatedCharacter = characterService.updateCharacter(userId, achievement);
+        log.info(updatedCharacter.toString());
+        return ResponseEntity.ok(updatedCharacter);
     }
 }
