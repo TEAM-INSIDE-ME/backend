@@ -22,9 +22,9 @@ public class CharacterService {
     private final CharacterMapper characterMapper;
     private Character.CharacterState state;
 
-    public Character initCharacter(){
+    public Character initCharacter(String userId){
         String[] emptyList = new String[7];
-        Character character = new Character(null, null, Character.CharacterState.FIRST, emptyList);
+        Character character = new Character(null, userId, Character.CharacterState.FIRST, emptyList);
         return character;
     }
 

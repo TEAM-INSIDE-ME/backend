@@ -19,9 +19,9 @@ public class CharacterController {
 
 
     //캐릭터 생성하기
-    @PostMapping("/createCharacter")
-    public ResponseEntity<Character> createCharacter() {
-        Character newCharacter = characterService.initCharacter();
+    @PostMapping("/createCharacter/{userId}")
+    public ResponseEntity<Character> createCharacter(@PathVariable String userId) {
+        Character newCharacter = characterService.initCharacter(userId);
         Character savedCharacter = characterService.saveCharacter(newCharacter);
         return ResponseEntity.ok(savedCharacter);
     }
