@@ -18,7 +18,7 @@ public class Character {
     @Id
     private String id; //mongodb에서 자동으로 생성하는 id
 
-    @Field("user_id")
+    @Field("userId")
     private String userId;
     private CharacterState state;
     private String[] emotions;

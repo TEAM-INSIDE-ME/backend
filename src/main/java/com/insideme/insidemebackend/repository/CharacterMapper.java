@@ -11,6 +11,6 @@ import java.util.Optional;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CharacterMapper {
     void updateCharacterFromDto(UpdateCharacterReq dto, @MappingTarget Character entity);
-    UpdateCharacterReq characterToUpdateCharacterReq(Optional<Character> character);
+    UpdateCharacterReq characterToUpdateCharacterReq(Character character);
 
 }
