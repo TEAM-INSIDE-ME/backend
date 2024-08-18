@@ -18,18 +18,28 @@ public class CharacterController {
     private CharacterService characterService;
 
 
-    @PostMapping("/createCharacter")
-    public ResponseEntity<Character> createCharacter() {
-        Character newCharacter = characterService.initCharacter();
-        Character savedCharacter = characterService.CreateCharacter(newCharacter);
+    //캐릭터 생성하기
+    @PostMapping("/createCharacter/{userId}")
+    public ResponseEntity<Character> createCharacter(@PathVariable String userId) {
+        Character newCharacter = characterService.initCharacter(userId);
+        Character savedCharacter = characterService.saveCharacter(newCharacter);
         return ResponseEntity.ok(savedCharacter);
     }
 
+    //캐릭터 불러오기
     @GetMapping("/{userId}")
-    public Optional<Character> findById(@PathVariable String userId) {
-        Optional<Character> character = characterService.getCharacterById(userId);
+    public Character findById(@PathVariable String userId) {
+        Character character = characterService.getCharacterById(userId);
         System.out.println(userId);
         System.out.println(character.toString());
         return character;
+    }
+
+    //캐릭터 업데이트하기
+    @PostMapping("/{userId}")
+    public ResponseEntity<Optional<Character>> updateCharacter(@PathVariable String userId, boolean achievement){
+        Optional<Character> updatedCharacter = characterService.updateCharacter(userId, achievement);
+        log.info(updatedCharacter.toString());
+        return ResponseEntity.ok(updatedCharacter);
     }
 }

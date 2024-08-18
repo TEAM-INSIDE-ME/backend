@@ -18,19 +18,19 @@ public class Character {
     @Id
     private String id; //mongodb에서 자동으로 생성하는 id
 
-    @Field("user_id")
+    @Field("userId")
     private String userId;
     private CharacterState state;
-    private List<String> emotions;
+    private String[] emotions;
 
     public Character() {
-        this.emotions = new LinkedList<>();
+        this.emotions = new String[7];
     }
 
-    public Character(String id, String userId, CharacterState state, List<String> emotions) {
+    public Character(String id, String userId, CharacterState state, String[] emotions) {
         this.id = id;
         this.userId = userId;
         this.state = state;
-        this.emotions = (emotions != null) ? emotions : new LinkedList<>();
+        this.emotions = (emotions != null) ? emotions : new String[7];
     }
 }

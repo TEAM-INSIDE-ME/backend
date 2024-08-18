@@ -4,12 +4,10 @@ import com.insideme.insidemebackend.domain.Character;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Queue;
-
 @Getter
 @Setter
-public class CreateRequest {
+public class UpdateCharacterReq {
     String userId;
     Character.CharacterState state;
-    Queue<String> emotions;
+    String[] emotions;
 }
