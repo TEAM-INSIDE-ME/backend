@@ -7,6 +7,10 @@ import com.insideme.insidemebackend.service.DiariesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 
 @RequestMapping("/api/diaries")
@@ -17,8 +21,11 @@ public class DiariesController {
     private final DiariesService diariesService;
 
     @PostMapping("/createADiary/{user_id}")
-    public ResponseEntity<String> createADiary(@PathVariable("user_id") String userId, @RequestBody CreateADiaryRequest createADiaryRequest) {
-        return ResponseEntity.ok(diariesService.createADiary(userId, createADiaryRequest));
+    public ResponseEntity<String> createADiary(@PathVariable("user_id") String userId,
+                                               @RequestPart("diary") CreateADiaryRequest createADiaryRequest,
+                                               @RequestPart("images") List<MultipartFile> images
+    ) throws IOException {
+        return ResponseEntity.ok(diariesService.createADiary(userId, createADiaryRequest, images));
     }
 
     @GetMapping("getADiary/{user_id}")
