@@ -44,4 +44,9 @@ public class ImageService {
         }).collect(Collectors.toList());
     }
 
+    @Transactional
+    public void deleteImage(String imageId){
+        gridFsTemplate.delete(Query.query(Criteria.where("_id").is("imageId")));
+    }
+
 }

@@ -64,8 +64,6 @@ public class DiariesService {
         return diary.getOutput();
     }
 
-
-
     public Diary getADiary(String userId, int index) {
         Diaries diaries = getDiariesByUserId(userId);
 
@@ -85,6 +83,11 @@ public class DiariesService {
 
     public void deleteADiary(String userId, int index) {
         Diaries diaries = getDiariesByUserId(userId);
+        Diary diary = diaries.getDiaries().get(index);
+        //이미지들 따로 삭제하기
+        for(int imageIndex = 0; imageIndex < diary.getImage_urls().size(); imageIndex++){
+            imageService.deleteImage(diary.getImage_urls().get(imageIndex));
+        }
         diaries.remove(index);
         diariesRepository.save(diaries);
     }
