@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 보호 비활성화
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/public/**", "/api/openai/**", "/api/diaries/**", "/api/mongodb/**", "/api/character/**", "/api/user/**").permitAll()
+                                .requestMatchers("/public/**", "/api/openai/**", "/api/diaries/**", "/api/mongodb/**", "/api/character/**", "/api/user/**", "/api/images/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults()); // HTTP Basic 인증 사용

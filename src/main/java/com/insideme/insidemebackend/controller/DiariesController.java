@@ -5,6 +5,8 @@ import com.insideme.insidemebackend.domain.Diary;
 import com.insideme.insidemebackend.dto.diaries.CreateADiaryRequest;
 import com.insideme.insidemebackend.service.DiariesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
