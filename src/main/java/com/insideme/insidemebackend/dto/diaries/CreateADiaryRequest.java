@@ -19,7 +19,7 @@ public record CreateADiaryRequest(
         diary.setFont(this.font);
         diary.setTitle(this.title);
         diary.setContent(this.content);
-        diary.setImage_urls(this.image_urls);
+        diary.setImageIds(this.image_urls);
         return diary;
     }
 }
