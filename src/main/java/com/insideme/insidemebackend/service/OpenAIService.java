@@ -37,7 +37,7 @@ public class OpenAIService {
         List<CreateMessageRequest> createMessageRequestList = new ArrayList<>(Arrays.asList(createMessageRequest));
         Object responseFormat = new Object() {public final String type = "json_object";};
         CreateRunRequest createRunRequest = new CreateRunRequest(assistantId,additionalInstructions, createMessageRequestList,
-                500,500,responseFormat);
+                1000,1000,responseFormat);
         String url = "https://api.openai.com/v1/threads/" + threadId + "/runs";
         return restTemplate.postForObject(url, createRunRequest, IdResponse.class);
     }
