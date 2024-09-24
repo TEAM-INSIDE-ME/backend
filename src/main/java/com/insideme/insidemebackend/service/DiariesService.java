@@ -53,20 +53,30 @@ public class DiariesService {
                 user.getThreadId(),content,ADDITIONAL_INSTRUCTIONS_FOR_DIARY_ENTRY);
     }
 
-    public String createADiary(String userId, CreateADiaryRequest createADiaryRequest, List<MultipartFile> images) throws IOException {
-        Diaries diaries = getDiariesByUserId(userId);
-        log.info(diaries.toString());
-        List<String> imageIds = imageService.saveImages(images);    //image 저장
-        Diary diary = createADiaryRequest.toEntity();
+//    public String createADiary(String userId, CreateADiaryRequest createADiaryRequest, List<MultipartFile> images) throws IOException {
+//        Diaries diaries = getDiariesByUserId(userId);
+//        log.info(diaries.toString());
+//        List<String> imageIds = imageService.saveImages(images);    //image 저장
+//        Diary diary = createADiaryRequest.toEntity();
+//
+//        diary.setOutput(getOutput(userId, diary.getContent()));
+//        diary.setImageIds(imageIds);
+//
+//        diaries.add(diary);
+//        diariesRepository.save(diaries);
+//
+//        return diary.getOutput();
+//    }
+public String createADiary(String userId, CreateADiaryRequest createADiaryRequest) {
+    Diaries diaries = getDiariesByUserId(userId);
+    Diary diary = createADiaryRequest.toEntity();
 
-        diary.setOutput(getOutput(userId, diary.getContent()));
-        diary.setImageIds(imageIds);
+    diary.setOutput(getOutput(userId, diary.getContent()));
+    diaries.add(diary);
+    diariesRepository.save(diaries);
 
-        diaries.add(diary);
-        diariesRepository.save(diaries);
-
-        return diary.getOutput();
-    }
+    return diary.getOutput();
+}
 
     public Diary getADiary(String userId, int index) {
         Diaries diaries = getDiariesByUserId(userId);

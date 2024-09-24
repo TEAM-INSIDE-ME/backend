@@ -22,13 +22,17 @@ public class DiariesController {
 
     private final DiariesService diariesService;
 
-    @PostMapping("/createADiary/{user_id}")
-    public ResponseEntity<String> createADiary(@PathVariable("user_id") String userId,
-                                               @RequestPart("diary") CreateADiaryRequest createADiaryRequest,
-                                               @RequestPart("images") List<MultipartFile> images
-    ) throws IOException {
-        return ResponseEntity.ok(diariesService.createADiary(userId, createADiaryRequest, images));
-    }
+//    @PostMapping("/createADiary/{user_id}")
+//    public ResponseEntity<String> createADiary(@PathVariable("user_id") String userId,
+//                                               @RequestPart("diary") CreateADiaryRequest createADiaryRequest,
+//                                               @RequestPart("images") List<MultipartFile> images
+//    ) throws IOException {
+//        return ResponseEntity.ok(diariesService.createADiary(userId, createADiaryRequest, images));
+//    }
+@PostMapping("/createADiary/{user_id}")
+public ResponseEntity<String> createADiary(@PathVariable("user_id") String userId, @RequestBody CreateADiaryRequest createADiaryRequest) {
+    return ResponseEntity.ok(diariesService.createADiary(userId, createADiaryRequest));
+}
 
     @GetMapping("getADiary/{user_id}")
     public ResponseEntity<Diary> getADiary(@PathVariable("user_id") String userId, @RequestParam int index) {
